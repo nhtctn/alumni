@@ -179,12 +179,22 @@ docker compose down --rmi all --volumes --remove-orphans
 
 ```text
 alumni/
-├── backend/             # NestJS API server
-├── frontend/            # Angular application (coming soon)
 ├── docs/
-│   ├── decisions.md     # Stack rationale and trade-offs
-├── docker-compose.yml   # Docker Compose configuration for running the application services
-└── .env.example         # Sample environment variable configuration
+│   ├── backlog.md      # Product backlog with planned work items
+│   ├── decisions.md    # Stack rationale and trade-offs
+│   ├── plan.md         # Active task and acceptance criteria
+│   ├── prd.md          # Product requirements and scope constraints
+│   ├── roadmap.md      # Course roadmap and delivery timeline
+│   └── tree.txt        # Generated repository structure snapshot
+├── scripts/
+│   └── tree.mjs        # Generates docs/tree.txt
+├── backend/            # NestJS API server
+├── frontend/           # Angular application (coming soon)
+├── AGENTS.md           # Local repo instructions and contributor workflow
+├── README.md           # Project overview, setup steps, and documentation
+├── package.json        # Root tooling and scripts
+├── docker-compose.yml  # Docker Compose configuration for running the application services
+└── .env.example        # Sample environment variable configuration
 ```
 
 ---

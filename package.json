@@ -1,0 +1,25 @@
+{
+  "name": "alumni",
+  "version": "1.0.0",
+  "description": "> A web platform that keeps Istanbul University and its graduates connected for life.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tree": "node scripts/tree.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nhtctn/alumni.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "AGPL-3.0-only",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/nhtctn/alumni/issues"
+  },
+  "homepage": "https://github.com/nhtctn/alumni#readme"
+}

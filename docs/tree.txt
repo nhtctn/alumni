@@ -1,0 +1,11 @@
+docs/
+  backlog.md
+  decisions.md
+  plan.md
+  prd.md
+  roadmap.md
+scripts/
+  tree.mjs
+AGENTS.md
+package.json
+README.md
