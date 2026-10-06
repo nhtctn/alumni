@@ -1,2 +1,4 @@
-B-02 | testing api via basic routes: /, /hello, /hello/{name}, /sum/{a}/{b}, /about
-B-03 | CRUD on /api/users + Swagger UI at /api/swagger
+- [x] B-01 | initialize project: docker compose file, gitignore file, env file
+- [x] B-02 | testing api via basic routes: /, /hello, /hello/{name}, /sum/{a}/{b}, /about
+- [ ] B-03 | CRUD on /api/users + test it via postman
+- [ ] B-04 | Swagger UI at /api/swagger

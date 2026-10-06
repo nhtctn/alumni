@@ -117,13 +117,14 @@ Open `.env` and adjust the values if needed (database user, password, database n
 docker compose up -d
 ```
 
-Docker Compose starts every service defined in `docker-compose.yml` and wires them together. Use `docker compose up` (without `-d`) if you want logs in your terminal.
+The initial API routes are available at `http://localhost:3000`:
 
-**4. Check that it works**
-
-```bash
-docker compose ps
-docker compose logs -f backend
+```text
+GET /              API welcome message
+GET /hello         Generic greeting
+GET /hello/:name   Named greeting
+GET /sum/:a/:b     Sum of two integers
+GET /about         Project information
 ```
 
 ---
@@ -179,6 +180,8 @@ docker compose down --rmi all --volumes --remove-orphans
 
 ```text
 alumni/
+├── backend/            # NestJS API server
+├── frontend/           # Angular application (coming soon)
 ├── docs/
 │   ├── backlog.md      # Product backlog with planned work items
 │   ├── decisions.md    # Stack rationale and trade-offs
@@ -188,13 +191,12 @@ alumni/
 │   └── tree.txt        # Generated repository structure snapshot
 ├── scripts/
 │   └── tree.mjs        # Generates docs/tree.txt
-├── backend/            # NestJS API server
-├── frontend/           # Angular application (coming soon)
+├── .env.example        # Sample environment variable configuration
+├── .gitignore          # Local files excluded from version control
 ├── AGENTS.md           # Local repo instructions and contributor workflow
-├── README.md           # Project overview, setup steps, and documentation
+├── docker-compose.yml  # PostgreSQL development service definition
 ├── package.json        # Root tooling and scripts
-├── docker-compose.yml  # Docker Compose configuration for running the application services
-└── .env.example        # Sample environment variable configuration
+└── README.md           # Project overview, setup steps, and documentation
 ```
 
 ---
@@ -206,7 +208,7 @@ The project follows an **incremental, week-by-week** model where each week build
 | Week | Focus                                | Status |
 | ---- | ------------------------------------ | ------ |
 | 01   | Project inception & fundamentals     | ✅     |
-| 02   | Routing: the doors of the system     | 📅     |
+| 02   | Routing: the doors of the system     | ✅     |
 | 03   | HTTP methods & CRUD                  | 📅     |
 | 04   | MVC Architecture                     | 📅     |
 | 05   | Database & ORM                       | 📅     |

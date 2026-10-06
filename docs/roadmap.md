@@ -5,7 +5,7 @@ The project follows an **incremental, week-by-week** model where each week build
 | Week | Focus                                | Status |
 | ---- | ------------------------------------ | ------ |
 | 01   | Project inception & fundamentals     | ✅     |
-| 02   | Routing: the doors of the system     | 📅     |
+| 02   | Routing: the doors of the system     | ✅     |
 | 03   | HTTP methods & CRUD                  | 📅     |
 | 04   | MVC Architecture                     | 📅     |
 | 05   | Database & ORM                       | 📅     |

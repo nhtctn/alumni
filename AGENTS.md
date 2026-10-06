@@ -40,9 +40,9 @@ Create missing files. Keep every file short.
 
 # Reading rules
 
-- Read `plan.md` only when running the task workflow or when asked about status.
+- Read `plan.md` only when planning, executing, or when asked about status.
 - Read other docs only when the task needs them:
-  - `backlog.md`: only when pulling work.
+  - `backlog.md`: only when planning.
   - `decisions.md`: search it, or read it when touching the stack, schema, or structure.
   - `roadmap.md`: when planning or unsure whether something is in scope.
   - `tree.txt`: when you need to locate files.
@@ -61,19 +61,25 @@ Create missing files. Keep every file short.
 
 # Task workflow
 
-Run this workflow ONLY when the owner explicitly asks to execute (e.g. "start the next task", "execute the plan"). For any other request (small fix, tweak, question), do exactly what was asked: don't touch `backlog.md` or `plan.md`. Scope, Decisions, README, and tree rules still apply.
+Two phases, each started ONLY by an explicit owner request. For any other request (small fix, tweak, question), do exactly what was asked and don't touch `backlog.md` or `plan.md`. Scope, Decisions, README, and tree rules still apply.
 
-1. Remove the old task from `plan.md`
-2. Pull exactly ONE item from `backlog.md` (remove it there) and append it to `plan.md`:
+## Phase 1: Plan (owner says e.g. "plan the next task")
+
+1. Remove the previous task from `plan.md` (if it has unticked subtasks, ask first).
+2. Pull exactly ONE item from `backlog.md` (the one the owner names, otherwise the best fit), remove it there, and write it to `plan.md`:
    - **Title:** action-oriented
    - **Acceptance Criteria:** checklist
    - **Subtasks:** step-by-step list
-   - **Technical Notes:** files to touch, constraints
+   - **Technical Notes:** files to touch, constraints, code example of core change
    - **User Story** ("As a [role], I want [action] so that [benefit]"): only for non-trivial tasks.
-3. Before writing source code, confirm the active task is in `plan.md`.
-4. Implement subtasks one by one and tick them off in `plan.md`.
-5. Done = acceptance criteria met, and tests and lint pass (once defined).
-6. Finish: update `Current week` if it changed, add a `decisions.md` entry if an approved decision was made, update `README.md` if features, stack, setup, or structure changed, run `node scripts/tree.mjs` if files were added, moved, or deleted.
+3. Stop. Write no source code. Wait for the owner to review; apply their corrections to `plan.md` only.
+
+## Phase 2: Execute (owner says e.g. "execute the plan")
+
+1. Confirm `plan.md` has an active task. If not, tell the owner to plan first.
+2. Implement subtasks one by one and tick them off in `plan.md`.
+3. Done = acceptance criteria met, and tests and lint pass (once defined).
+4. Finish: update `Current week` if it changed, add a `decisions.md` entry if an approved decision was made, update `README.md` if features, stack, setup, or structure changed, run `node scripts/tree.mjs` if files were added, moved, or deleted.
 
 # Behavior
 
@@ -81,3 +87,4 @@ Run this workflow ONLY when the owner explicitly asks to execute (e.g. "start th
 - Ask the owner only when requirements are ambiguous or the change is destructive or large.
 - Update docs only when something actually changed.
 - Final reply: 2-3 lines (what changed, what's next).
+- Do not commit changes.

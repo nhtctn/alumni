@@ -1,11 +1,25 @@
+backend/
+  src/
+    app.controller.ts
+    app.module.ts
+    main.ts
+  Dockerfile
+  nest-cli.json
+  package.json
+  tsconfig.json
 docs/
   backlog.md
   decisions.md
   plan.md
   prd.md
   roadmap.md
+frontend/
+  .gitkeep
 scripts/
   tree.mjs
+.env.example
+.gitignore
 AGENTS.md
+docker-compose.yml
 package.json
 README.md
