@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Announcements | Alumni Istanbul</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <header class="page-header">
+        <div>
+          <p class="eyebrow">Alumni Istanbul</p>
+          <h1>Announcements</h1>
+          <p class="lede">Share important news with the university community.</p>
+        </div>
+        <a class="button button-primary" href="/announcements/new">Add announcement</a>
+      </header>
+      <section class="card">
+        <div class="section-heading">
+          <h2>Latest news</h2>
+          <span class="badge">{{announcements.length}} total</span>
+        </div>
+        {{#if announcements.length}}
+          <div class="user-list">
+            {{#each announcements}}
+              <a class="user-row" href="/announcements/{{id}}">
+                <span class="avatar">{{initial title}}</span>
+                <span class="user-copy">
+                  <strong>{{title}}</strong>
+                  <small>{{publishedAt}}</small>
+                </span>
+                <span class="arrow">→</span>
+              </a>
+            {{/each}}
+          </div>
+        {{else}}
+          <div class="empty-state">
+            <span class="empty-icon">✦</span>
+            <h3>No announcements yet</h3>
+            <p>Create the first announcement to get started.</p>
+            <a class="button button-secondary" href="/announcements/new">Create announcement</a>
+          </div>
+        {{/if}}
+      </section>
+    </main>
+  </body>
+</html>

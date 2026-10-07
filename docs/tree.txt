@@ -2,6 +2,12 @@ backend/
   public/
     styles.css
   src/
+    announcements/
+      announcement.dto.ts
+      announcement.entity.ts
+      announcements-api.controller.ts
+      announcements.controller.ts
+      announcements.service.ts
     users/
       user.dto.ts
       user.entity.ts
@@ -13,6 +19,12 @@ backend/
     health.controller.ts
     main.ts
   views/
+    announcements/
+      detail.hbs
+      error.hbs
+      form.hbs
+      index.hbs
+      not-found.hbs
     users/
       detail.hbs
       error.hbs

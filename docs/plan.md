@@ -1,6 +1,6 @@
 Current week: 04
 
-> [ ] B-07 | add a announcments module: routes, model, 2 controller (one for hbs), views
+> [x] B-07 | add a announcments module: routes, model, 2 controller (one for hbs), views
 
 ## Add the announcements module with API and Handlebars routes
 
@@ -8,30 +8,30 @@ Current week: 04
 
 **Acceptance Criteria**
 
-- [ ] Announcements are organized in a feature directory at `backend/src/announcements/`, following the existing users structure.
-- [ ] The announcement model exposes an `id`, `title`, `content`, and publication timestamp suitable for API responses and rendered pages.
-- [ ] The announcement service owns the in-memory collection, ID generation, ordering, create/read/update/delete operations, and not-found handling.
-- [ ] `GET /api/announcements` lists announcements ordered by ID.
-- [ ] `POST /api/announcements` creates an announcement with validated input.
-- [ ] `GET /api/announcements/:id`, `PUT /api/announcements/:id`, `PATCH /api/announcements/:id`, and `DELETE /api/announcements/:id` provide the same CRUD conventions as `/api/users`.
-- [ ] Swagger documents the announcement API, DTOs, model, and expected success/error responses.
-- [ ] `GET /announcements` renders an announcement list through Handlebars.
-- [ ] `GET /announcements/new`, `POST /announcements`, `GET /announcements/:id`, `GET /announcements/:id/edit`, `POST /announcements/:id/edit`, and `POST /announcements/:id/delete` support browser-facing announcement management.
-- [ ] Unknown announcement IDs return an appropriate HTML 404 page, while API errors remain JSON NestJS exceptions.
-- [ ] The HBS controller delegates all storage and business logic to `AnnouncementsService`; no duplicate collection is introduced.
-- [ ] Existing user routes, API behavior, view engine configuration, styling, and Swagger documentation remain unchanged.
-- [ ] API and rendered browser routes are verified through Docker-based HTTP requests.
-- [ ] README and generated repository structure documentation describe the new announcements feature.
+- [x] Announcements are organized in a feature directory at `backend/src/announcements/`, following the existing users structure.
+- [x] The announcement model exposes an `id`, `title`, `content`, and publication timestamp suitable for API responses and rendered pages.
+- [x] The announcement service owns the in-memory collection, ID generation, ordering, create/read/update/delete operations, and not-found handling.
+- [x] `GET /api/announcements` lists announcements ordered by ID.
+- [x] `POST /api/announcements` creates an announcement with validated input.
+- [x] `GET /api/announcements/:id`, `PUT /api/announcements/:id`, `PATCH /api/announcements/:id`, and `DELETE /api/announcements/:id` provide the same CRUD conventions as `/api/users`.
+- [x] Swagger documents the announcement API, DTOs, model, and expected success/error responses.
+- [x] `GET /announcements` renders an announcement list through Handlebars.
+- [x] `GET /announcements/new`, `POST /announcements`, `GET /announcements/:id`, `GET /announcements/:id/edit`, `POST /announcements/:id/edit`, and `POST /announcements/:id/delete` support browser-facing announcement management.
+- [x] Unknown announcement IDs return an appropriate HTML 404 page, while API errors remain JSON NestJS exceptions.
+- [x] The HBS controller delegates all storage and business logic to `AnnouncementsService`; no duplicate collection is introduced.
+- [x] Existing user routes, API behavior, view engine configuration, styling, and Swagger documentation remain unchanged.
+- [x] API and rendered browser routes are verified through Docker-based HTTP requests.
+- [x] README and generated repository structure documentation describe the new announcements feature.
 
 **Subtasks**
 
-- [ ] Add `announcement.entity.ts`, `announcement.dto.ts`, and `announcements.service.ts` using the users module's conventions.
-- [ ] Add `announcements-api.controller.ts` with `AnnouncementsApiController` for `/api/announcements`, including Swagger metadata and full CRUD.
-- [ ] Add `AnnouncementsController` for `/announcements` with rendered list, detail, form, not-found, and error flows.
-- [ ] Register the announcement provider and both controllers in `AppModule`, preserving the existing users registrations.
-- [ ] Add Handlebars templates under `backend/views/announcements/` for list, detail, form, not-found, and error states.
-- [ ] Verify validation, API CRUD, browser CRUD, redirects, and unknown-ID behavior against the running Docker Compose backend.
-- [ ] Update README documentation and regenerate `docs/tree.txt`.
+- [x] Add `announcement.entity.ts`, `announcement.dto.ts`, and `announcements.service.ts` using the users module's conventions.
+- [x] Add `announcements-api.controller.ts` with `AnnouncementsApiController` for `/api/announcements`, including Swagger metadata and full CRUD.
+- [x] Add `AnnouncementsController` for `/announcements` with rendered list, detail, form, not-found, and error flows.
+- [x] Register the announcement provider and both controllers in `AppModule`, preserving the existing users registrations.
+- [x] Add Handlebars templates under `backend/views/announcements/` for list, detail, form, not-found, and error states.
+- [x] Verify validation, API CRUD, browser CRUD, redirects, and unknown-ID behavior against the running Docker Compose backend.
+- [x] Update README documentation and regenerate `docs/tree.txt`.
 
 **Technical Notes**
 

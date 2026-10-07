@@ -97,9 +97,9 @@ The full reasoning behind each choice is in [`docs/decisions.md`](./docs/decisio
 The NestJS backend uses MVC with server-side rendering. HBS (Handlebars) is
 used as the template engine:
 
-- **Model:** entities and DTOs represent user data and validated input.
-- **Controller:** `UsersApiController` serves JSON under `/api/users`;
-  `UsersController` handles browser requests under `/users`.
+- **Model:** entities and DTOs represent user and announcement data and validated input.
+- **Controller:** `UsersApiController` and `AnnouncementsApiController` serve JSON;
+  `UsersController` and `AnnouncementsController` handle browser requests.
 
 - **View:** Handlebars templates in `backend/views/` render HTML pages.
 - **Service:** `UsersService` contains shared in-memory storage and business
@@ -117,6 +117,9 @@ Try the Handlebars pages directly:
 
 `UsersController` renders `/users` pages with Handlebars and shares the
 in-memory `UsersService` with `UsersApiController`.
+
+Announcements use the same API and server-rendered structure under
+`/api/announcements` and `/announcements`.
 
 ---
 
@@ -159,25 +162,38 @@ docker compose up -d
 The routes are available at `http://localhost:3000`:
 
 ```text
-GET /                 API welcome message
-GET /hello            Generic greeting
-GET /hello/:name      Named greeting
-GET /sum/:a/:b        Sum of two integers
-GET /about            Project information
-GET /api/health       Health check
-GET /api/users        List users ordered by ID through the API
-POST /api/users       Create an in-memory user through the API
-GET /api/users/:id    Get one user through the API
-PUT /api/users/:id    Replace a user through the API
-PATCH /api/users/:id  Partially update a user through the API
-DELETE /api/users/:id Delete a user through the API
-GET /users            Render the user list as HTML
-GET /users/:id        Render one user as HTML
-GET /users/new        Render the create-user form
-POST /users           Create a user from a browser form
-GET /users/:id/edit   Render the edit-user form
-POST /users/:id/edit  Update a user from a browser form
-POST /users/:id/delete Delete a user from a browser form
+GET /                               API welcome message
+GET /hello                          Generic greeting
+GET /hello/:name                    Named greeting
+GET /sum/:a/:b                      Sum of two integers
+GET /about                          Project information
+GET /api/health                     Health check
+GET /api/users                      List users ordered by ID through the API
+POST /api/users                     Create an in-memory user through the API
+GET /api/users/:id                  Get one user through the API
+PUT /api/users/:id                  Replace a user through the API
+PATCH /api/users/:id                Partially update a user through the API
+DELETE /api/users/:id               Delete a user through the API
+GET /api/announcements              List announcements ordered by ID
+POST /api/announcements             Create an announcement
+GET /api/announcements/:id          Get one announcement
+PUT /api/announcements/:id          Replace an announcement
+PATCH /api/announcements/:id        Partially update an announcement
+DELETE /api/announcements/:id       Delete an announcement
+GET /users                          Render the user list as HTML
+GET /users/:id                      Render one user as HTML
+GET /users/new                      Render the create-user form
+POST /users                         Create a user from a browser form
+GET /users/:id/edit                 Render the edit-user form
+POST /users/:id/edit                Update a user from a browser form
+POST /users/:id/delete              Delete a user from a browser form
+GET /announcements                  Render the announcement list as HTML
+GET /announcements/:id              Render one announcement as HTML
+GET /announcements/new              Render the create-announcement form
+POST /announcements                 Create an announcement from a browser form
+GET /announcements/:id/edit         Render the edit-announcement form
+POST /announcements/:id/edit        Update an announcement from a browser form
+POST /announcements/:id/delete      Delete an announcement from a browser form
 ```
 
 User payloads require a non-empty `name` and valid `email`. Invalid input returns
