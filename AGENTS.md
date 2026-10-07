@@ -9,18 +9,16 @@ Lead developer for Alumni Istanbul. Work from the files in `/docs` and keep them
 - User roles: Admin, Academician, Alumni, Student, Guest (role-based access).
 - Planned cross-cutting features: dark/light theme, responsive design, PWA, multi-language.
 - Layout: `backend/` (NestJS API), `frontend/` (Angular, may not exist yet), `docs/`, `scripts/`, `docker-compose.yml`, `.env.example`. Full map: `docs/tree.txt`.
-- Conventions: follow the official NestJS and Angular style guides and the patterns already in the code. TypeScript everywhere.
-- Nest Module DTO organization: Keep related DTO classes for a NestJS module in one `<module>.dto.ts` file.
+- Conventions: follow the official NestJS and Angular style guides and the patterns already in the code. TypeScript everywhere. Exception to the official NestJS style: keep a module's related DTO classes in one `<module>.dto.ts` file.
 
 # Commands
 
 Everything runs in containers. Never run app code or install packages on the host.
 
-- Start / stop: `docker compose up -d` / `docker compose down`
-- Logs: `docker compose logs -f <service>`
+- Services: `backend`, `database`, `frontend` (see `docker-compose.yml`).
 - Install a package: `docker compose exec backend npm install <pkg>`
 - DB shell: `docker compose exec database psql -U <db_user> -d <db_name>` (values in `.env`)
-- Rebuild one service: `docker compose build --no-cache <service> && docker compose up -d <service>`
+- Logs: `docker compose logs --tail 100 <service>` (never `-f`: it never returns).
 - Never run `docker compose down --volumes` (wipes the database) without asking.
 - Test: TODO | Lint: TODO. If a command is TODO, ask the owner; don't guess.
 - Host-side exception: `node scripts/tree.mjs` (see Docs).
@@ -31,20 +29,21 @@ Create missing files. Keep every file short.
 
 - `prd.md`: scope constraints and MVP requirements. Short, rarely changes.
 - `decisions.md`: one line per significant decision: `YYYY-MM-DD | Decision | Why (one line) | Rejected: A, B`.
-- `backlog.md`: one line per item, with an ID. Detailed specs live here, not in the PRD.
+- `backlog.md`: one line per item: `- [ ] bXX: description`. Include only constraints that affect the design (roles, filters, limits). Full specs are written in `plan.md` during planning. Items are checked `[x]` when done.
 - `plan.md`: the active task only. First line: `Current week: NN`.
 - `roadmap.md`: the 14-week course schedule.
 - `tree.txt`: generated repo structure. Never edit by hand.
 - `README.md` (repo root, not in `/docs`): public overview (features, stack, setup, structure, roadmap status). Keep it accurate; read it only when updating it.
 - No separate architecture doc. Schema = entities/migrations, routes = controllers, rationale = `decisions.md`.
 - Record production-specific reminders in the backlog when development and production workflows or configuration must differ.
-- When a file passes ~150 lines, move older entries to `docs/archive/<name>-YYYY.md`.
+- When a file passes ~150 lines, move older entries to `docs/archive/<name>-YYYY.md` (except `backlog.md`, which the owner manages).
 
 # Reading rules
 
 - Read `plan.md` only when planning, executing, or when asked about status.
 - Read other docs only when the task needs them:
   - `backlog.md`: only when planning.
+  - `prd.md`: when planning, or when a requirement is unclear.
   - `decisions.md`: search it, or read it when touching the stack, schema, or structure.
   - `roadmap.md`: when planning or unsure whether something is in scope.
   - `tree.txt`: when you need to locate files.
@@ -67,27 +66,30 @@ Two phases, each started ONLY by an explicit owner request. For any other reques
 
 ## Phase 1: Plan (owner says e.g. "plan the next task")
 
-1. Remove the previous task from `plan.md` (if it has unticked subtasks, ask first).
-2. Pull exactly ONE item from `backlog.md` (the one the owner names, otherwise the best fit), remove it there, and write it to `plan.md`:
+1. Move the previous `plan.md` to `docs/archive/plans/bXX.md` with `mv` (`bXX` = its backlog ID). Don't rewrite it. If it has unticked subtasks, ask first.
+2. Take exactly ONE unchecked item from `backlog.md` (the one the owner names, otherwise the best fit). Brainstorm the task and ask all open decisions in ONE message (max 3 options each, one-line trade-off).
+3. Write the new `plan.md`, starting with `Current Week: NN`:
    - > backlog item
    - **Title:** action-oriented
    - **Acceptance Criteria:** checklist
    - **Subtasks:** step-by-step list
-   - **Technical Notes:** files to touch, constraints, code example of core change
+   - **Decisions:** owner-approved choices made while planning
+   - **Technical Notes:** files to touch, constraints, code sketch of the core change (max ~10 lines, only if the approach is non-obvious)
    - **User Story** ("As a [role], I want [action] so that [benefit]"): only for non-trivial tasks.
-3. Stop. Write no source code. Wait for the owner to review; apply their corrections to `plan.md` only.
+4. Stop. Write no source code. Wait for the owner to review; apply their corrections to `plan.md` only.
 
 ## Phase 2: Execute (owner says e.g. "execute the plan")
 
 1. Confirm `plan.md` has an active task. If not, tell the owner to plan first.
-2. Implement subtasks one by one and tick them off in `plan.md`.
+2. Implement subtasks one by one. Tick them off in `plan.md` at natural checkpoints, not one by one.
 3. Done = acceptance criteria met, and tests and lint pass (once defined).
-4. Finish: check backlog item, add a `decisions.md` entry if an approved decision was made, update `README.md` if features, stack, setup, or structure changed, run `node scripts/tree.mjs` if files were added, moved, or deleted.
+4. Finish: check the item off in `backlog.md`, move the plan's approved Decisions to `decisions.md`, update `README.md` if features, stack, setup, or structure changed, run `node scripts/tree.mjs` if files were added, moved, or deleted.
 
 # Behavior
 
 - Don't paste plans or diffs into chat; edit files directly.
 - Ask the owner only when requirements are ambiguous or the change is destructive or large.
+- Keep command output small: use `--tail`, quiet flags, or filter to failures. Never run follow or watch commands.
 - Update docs only when something actually changed.
 - Final reply: 2-3 lines (what changed, what's next).
 - Do not commit changes.

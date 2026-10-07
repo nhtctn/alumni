@@ -3,9 +3,9 @@ backend/
     styles.css
   src/
     users/
-      api-users.controller.ts
       user.dto.ts
       user.entity.ts
+      users-api.controller.ts
       users.controller.ts
       users.service.ts
     app.controller.ts
