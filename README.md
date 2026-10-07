@@ -21,9 +21,13 @@ Alumni Istanbul is a centralized hub where the university can track alumni profi
   - [Technical Features](#technical-features)
   - [Tech Stack](#tech-stack)
   - [MVC Structure](#mvc-structure)
+    - [Dummy server-rendered views](#dummy-server-rendered-views)
   - [Getting Started](#getting-started)
     - [Requirements](#requirements)
     - [Setup](#setup)
+  - [API Structure](#api-structure)
+    - [Routes](#routes)
+    - [API Documentation: Swagger](#api-documentation-swagger)
   - [Docker Compose Cheat Sheet](#docker-compose-cheat-sheet)
     - [Daily use](#daily-use)
     - [Working inside containers](#working-inside-containers)
@@ -94,14 +98,25 @@ The NestJS backend uses MVC with server-side rendering. HBS (Handlebars) is
 used as the template engine:
 
 - **Model:** entities and DTOs represent user data and validated input.
-- **Controller:** `ApiUsersController` serves JSON under `/api/users`;
+- **Controller:** `UsersApiController` serves JSON under `/api/users`;
   `UsersController` handles browser requests under `/users`.
+
 - **View:** Handlebars templates in `backend/views/` render HTML pages.
 - **Service:** `UsersService` contains shared in-memory storage and business
   logic used by both controllers.
 
 This keeps API responses and server-rendered pages separate while reusing the
 same model and service layer.
+
+### Dummy server-rendered views
+
+Try the Handlebars pages directly:
+
+- [Open the user list](http://localhost:3000/users)
+- [Open the create-user form](http://localhost:3000/users/new)
+
+`UsersController` renders `/users` pages with Handlebars and shares the
+in-memory `UsersService` with `UsersApiController`.
 
 ---
 
@@ -135,7 +150,13 @@ Open `.env` and adjust the values if needed (database user, password, database n
 docker compose up -d
 ```
 
-The API routes are available at `http://localhost:3000`:
+---
+
+## API Structure
+
+### Routes
+
+The routes are available at `http://localhost:3000`:
 
 ```text
 GET /                 API welcome message
@@ -144,8 +165,8 @@ GET /hello/:name      Named greeting
 GET /sum/:a/:b        Sum of two integers
 GET /about            Project information
 GET /api/health       Health check
-POST /api/users       Create an in-memory user through the API
 GET /api/users        List users ordered by ID through the API
+POST /api/users       Create an in-memory user through the API
 GET /api/users/:id    Get one user through the API
 PUT /api/users/:id    Replace a user through the API
 PATCH /api/users/:id  Partially update a user through the API
@@ -162,29 +183,10 @@ POST /users/:id/delete Delete a user from a browser form
 User payloads require a non-empty `name` and valid `email`. Invalid input returns
 `400`, unknown IDs return `404`, and duplicate e-mail addresses return `409`.
 
+### API Documentation: Swagger
+
 Swagger UI is available at `http://localhost:3000/api/swagger`, with the generated
-OpenAPI document at `http://localhost:3000/api/swagger-json`. The document is
-generated from NestJS decorators at startup.
-
-You can test the dummy server-rendered views directly:
-
-- [Open the user list](http://localhost:3000/users)
-- [Open the create-user form](http://localhost:3000/users/new)
-
-The application separates user entry points by interface:
-
-- `ApiUsersController` handles programmatic API requests under `/api/users`.
-- `UsersController` handles browser requests under `/users` and returns
-  server-rendered HTML.
-
-Both controllers can use the same `UsersService`; only the transport and
-response format differ. Both currently use the in-memory user store.
-
-The server-rendered views use Handlebars (`hbs`) templates in
-`backend/views/users/`. The list, detail, create/edit form, error, and not-found
-pages are separate templates. Shared visual styling is served from
-`backend/public/styles.css`, so the browser-facing layer can evolve
-independently from the JSON API.
+OpenAPI document at `http://localhost:3000/api/swagger-json`. The document is generated from NestJS decorators at startup.
 
 For development with automatic source watching and Swagger refresh, use the
 default Compose configuration:

@@ -28,7 +28,7 @@ import { UsersService } from './users.service';
 
 @Controller('api/users')
 @ApiTags('Users')
-export class ApiUsersController {
+export class UsersApiController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
