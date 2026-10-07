@@ -20,6 +20,7 @@ Alumni Istanbul is a centralized hub where the university can track alumni profi
     - [User Roles](#user-roles)
   - [Technical Features](#technical-features)
   - [Tech Stack](#tech-stack)
+  - [MVC Structure](#mvc-structure)
   - [Getting Started](#getting-started)
     - [Requirements](#requirements)
     - [Setup](#setup)
@@ -87,6 +88,23 @@ The full reasoning behind each choice is in [`docs/decisions.md`](./docs/decisio
 
 ---
 
+## MVC Structure
+
+The NestJS backend uses MVC with server-side rendering. HBS (Handlebars) is
+used as the template engine:
+
+- **Model:** entities and DTOs represent user data and validated input.
+- **Controller:** `ApiUsersController` serves JSON under `/api/users`;
+  `UsersController` handles browser requests under `/users`.
+- **View:** Handlebars templates in `backend/views/` render HTML pages.
+- **Service:** `UsersService` contains shared in-memory storage and business
+  logic used by both controllers.
+
+This keeps API responses and server-rendered pages separate while reusing the
+same model and service layer.
+
+---
+
 ## Getting Started
 
 ### Requirements
@@ -126,12 +144,19 @@ GET /hello/:name      Named greeting
 GET /sum/:a/:b        Sum of two integers
 GET /about            Project information
 GET /api/health       Health check
-POST /api/users       Create an in-memory user
-GET /api/users        List users ordered by ID
-GET /api/users/:id    Get one user
-PUT /api/users/:id    Replace a user
-PATCH /api/users/:id  Partially update a user
-DELETE /api/users/:id Delete a user
+POST /api/users       Create an in-memory user through the API
+GET /api/users        List users ordered by ID through the API
+GET /api/users/:id    Get one user through the API
+PUT /api/users/:id    Replace a user through the API
+PATCH /api/users/:id  Partially update a user through the API
+DELETE /api/users/:id Delete a user through the API
+GET /users            Render the user list as HTML
+GET /users/:id        Render one user as HTML
+GET /users/new        Render the create-user form
+POST /users           Create a user from a browser form
+GET /users/:id/edit   Render the edit-user form
+POST /users/:id/edit  Update a user from a browser form
+POST /users/:id/delete Delete a user from a browser form
 ```
 
 User payloads require a non-empty `name` and valid `email`. Invalid input returns
@@ -140,6 +165,26 @@ User payloads require a non-empty `name` and valid `email`. Invalid input return
 Swagger UI is available at `http://localhost:3000/api/swagger`, with the generated
 OpenAPI document at `http://localhost:3000/api/swagger-json`. The document is
 generated from NestJS decorators at startup.
+
+You can test the dummy server-rendered views directly:
+
+- [Open the user list](http://localhost:3000/users)
+- [Open the create-user form](http://localhost:3000/users/new)
+
+The application separates user entry points by interface:
+
+- `ApiUsersController` handles programmatic API requests under `/api/users`.
+- `UsersController` handles browser requests under `/users` and returns
+  server-rendered HTML.
+
+Both controllers can use the same `UsersService`; only the transport and
+response format differ. Both currently use the in-memory user store.
+
+The server-rendered views use Handlebars (`hbs`) templates in
+`backend/views/users/`. The list, detail, create/edit form, error, and not-found
+pages are separate templates. Shared visual styling is served from
+`backend/public/styles.css`, so the browser-facing layer can evolve
+independently from the JSON API.
 
 For development with automatic source watching and Swagger refresh, use the
 default Compose configuration:
@@ -211,7 +256,8 @@ docker compose down --rmi all --volumes --remove-orphans
 
 ```text
 alumni/
-├── backend/            # NestJS API server
+├── backend/            # NestJS API and server-rendered web server
+│   └── views/          # Handlebars templates for browser-facing routes
 ├── frontend/           # Angular application (coming soon)
 ├── docs/
 │   ├── backlog.md      # Product backlog with planned work items
@@ -240,8 +286,8 @@ The project follows an **incremental, week-by-week** model where each week build
 | ---- | ------------------------------------ | ------ |
 | 01   | Project inception & fundamentals     | ✅     |
 | 02   | Routing: the doors of the system     | ✅     |
-| 03   | HTTP methods & CRUD                  | 📅     |
-| 04   | MVC Architecture                     | 📅     |
+| 03   | HTTP methods & CRUD                  | ✅     |
+| 04   | MVC Architecture                     | ✅     |
 | 05   | Database & ORM                       | 📅     |
 | 06   | Database integration                 | 📅     |
 | 07   | Relational data & advanced routing   | 📅     |

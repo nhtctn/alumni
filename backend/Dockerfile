@@ -7,6 +7,8 @@ RUN npm install
 
 COPY tsconfig.json nest-cli.json webpack.config.js ./
 COPY src ./src
+COPY views ./views
+COPY public ./public
 
 RUN npm run build
 

@@ -1,6 +1,9 @@
 backend/
+  public/
+    styles.css
   src/
     users/
+      api-users.controller.ts
       user.dto.ts
       user.entity.ts
       users.controller.ts
@@ -9,10 +12,18 @@ backend/
     app.module.ts
     health.controller.ts
     main.ts
+  views/
+    users/
+      detail.hbs
+      error.hbs
+      form.hbs
+      index.hbs
+      not-found.hbs
   Dockerfile
   nest-cli.json
   package.json
   tsconfig.json
+  webpack.config.js
 docs/
   backlog.md
   decisions.md

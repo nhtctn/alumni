@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Users | Alumni Istanbul</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <header class="page-header">
+        <div>
+          <p class="eyebrow">Alumni Istanbul</p>
+          <h1>Community members</h1>
+          <p class="lede">Manage the people connected to the university community.</p>
+        </div>
+        <a class="button button-primary" href="/users/new">Add user</a>
+      </header>
+      <section class="card">
+        <div class="section-heading">
+          <h2>Users</h2>
+          <span class="badge">{{users.length}} total</span>
+        </div>
+        {{#if users.length}}
+          <div class="user-list">
+            {{#each users}}
+              <a class="user-row" href="/users/{{id}}">
+                <span class="avatar">{{initial name}}</span>
+                <span class="user-copy">
+                  <strong>{{name}}</strong>
+                  <small>{{email}}</small>
+                </span>
+                <span class="arrow">→</span>
+              </a>
+            {{/each}}
+          </div>
+        {{else}}
+          <div class="empty-state">
+            <span class="empty-icon">✦</span>
+            <h3>No users yet</h3>
+            <p>Create the first community member to get started.</p>
+            <a class="button button-secondary" href="/users/new">Create user</a>
+          </div>
+        {{/if}}
+      </section>
+    </main>
+  </body>
+</html>

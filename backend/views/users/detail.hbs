@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{user.name}} | Alumni Istanbul</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <main class="shell narrow">
+      <a class="back-link" href="/users">← All users</a>
+      <section class="profile-card">
+        <div class="profile-top">
+          <span class="avatar avatar-large">{{initial user.name}}</span>
+          <div>
+            <p class="eyebrow">Community member</p>
+            <h1>{{user.name}}</h1>
+          </div>
+        </div>
+        <dl class="details">
+          <div><dt>Email address</dt><dd>{{user.email}}</dd></div>
+          <div><dt>Member ID</dt><dd>#{{user.id}}</dd></div>
+        </dl>
+        <div class="actions">
+          <a class="button button-primary" href="/users/{{user.id}}/edit">Edit user</a>
+          <form method="post" action="/users/{{user.id}}/delete">
+            <button class="button button-danger" type="submit">Delete user</button>
+          </form>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

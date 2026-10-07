@@ -8,6 +8,8 @@ services:
       - "3000:3000"
     volumes:
       - ./backend/src:/app/src
+      - ./backend/views:/app/views
+      - ./backend/public:/app/public
     depends_on:
       database:
         condition: service_healthy

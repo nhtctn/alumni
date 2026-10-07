@@ -1,57 +1,48 @@
-Current week: 03
+Current week: 04
 
-> [x] B-03 | CRUD on /api/users
+> [x] B-05 | create /users endpoints intended to respond to the web application with page content
+> [x] B-06 | add a view layer using Handlebars (`hbs`) as the template engine
 
-## Implement CRUD users API
+## Implement web user endpoints and Handlebars views
 
-**Acceptance Criteria**
-
-- [x] `GET /api/health` returns `{ "status": "ok" }`.
-- [x] User CRUD routes support create, list, read, full replace, partial update, and delete.
-- [x] User input validation returns 400 for invalid payloads.
-- [x] Unknown user IDs return 404.
-- [x] Duplicate e-mail addresses return 409.
-- [x] User records remain in memory and list results are ordered by ID.
-- [x] All routes are verified with container-based HTTP requests.
-
-**Subtasks**
-
-- [x] Add the user model, DTOs, service, and API controller.
-- [x] Add health endpoint and preserve existing basic routes.
-- [x] Verify CRUD, validation, conflict, and not-found behavior through Docker.
-- [x] Update project documentation and regenerate the repository tree.
-
-**Technical Notes**
-
-- Files: `backend/src/users/`, including the consolidated `user.dto.ts`, plus `backend/src/health.controller.ts`, `backend/src/app.module.ts`, `backend/src/main.ts`.
-- Keep users in memory until the database work in week 05.
-- Use `class-validator` and `class-transformer` through Nest's global validation pipe.
-
----
-
-> [x] B-04 | Swagger UI at /api/swagger
-
-## Add Swagger API documentation
+**Title:** Add browser-facing user routes and a Handlebars view layer
 
 **Acceptance Criteria**
 
-- [x] Swagger UI is available at `GET /api/swagger`.
-- [x] The generated document describes the health and users endpoints.
-- [x] Request DTOs and response models appear in the generated documentation.
-- [x] Endpoint descriptions, parameters, request bodies, and response status codes are documented.
-- [x] Swagger setup works through Docker Compose.
-- [x] Updating endpoint decorators automatically updates the generated OpenAPI document on application restart.
+- [x] `GET /users` responds with a polished rendered HTML user list.
+- [x] `GET /users/new` responds with a rendered create-user form.
+- [x] `POST /users` creates a user from a browser form.
+- [x] `GET /users/:id` responds with rendered HTML for an existing in-memory user.
+- [x] `GET /users/:id/edit` responds with a rendered edit form.
+- [x] `POST /users/:id/edit` updates a user from a browser form.
+- [x] `POST /users/:id/delete` deletes a user from a browser form.
+- [x] Unknown user IDs return an appropriate HTML 404 response.
+- [x] Handlebars is configured as the NestJS view engine and templates are loaded from a documented directory.
+- [x] The web controller uses `UsersService` and does not duplicate user storage or business logic.
+- [x] Existing `/api/users` CRUD behavior and Swagger documentation remain unchanged.
+- [x] The rendered pages and browser CRUD operations are verified through Docker-based HTTP requests.
+- [x] Shared static styling is served from `backend/public/styles.css`.
+- [x] README and generated repository structure documentation describe the new view layer.
 
 **Subtasks**
 
-- [x] Add `@nestjs/swagger` to the backend and configure `DocumentBuilder` in application bootstrap.
-- [x] Add Swagger decorators to controllers and DTOs.
-- [x] Verify the UI and generated JSON document through the running backend container.
-- [x] Document the development workflow for keeping Swagger current.
+- [x] Add the Handlebars dependency and configure the NestJS application view engine.
+- [x] Add browser-facing `UsersController` routes for full user CRUD.
+- [x] Add Handlebars templates for lists, details, forms, errors, and empty states.
+- [x] Add explicit web error handling that returns HTML without changing API error behavior.
+- [x] Add polished responsive styling and serve it as a static asset.
+- [x] Verify the API and web routes together through the running Docker Compose backend.
+- [x] Update README documentation and regenerate `docs/tree.txt`.
 
 **Technical Notes**
 
-- Files: `backend/src/main.ts`, `backend/src/app.controller.ts`, `backend/src/health.controller.ts`, `backend/src/users/`, and `backend/package.json`.
-- Nest Swagger generates the OpenAPI document at runtime from decorators; no manually maintained JSON file is required.
-- Development is the default `docker-compose.yml`: it mounts `backend/src`, runs the webpack-backed `start:dev` watch process with a one-second polling interval for reliable Windows/Docker file change detection. After a source change, Nest rebuilds and the Swagger document is regenerated when the application restarts.
-- Production applies the separate `docker-compose.prod.yml` override with the default `docker-compose.yml`; it changes the backend to `npm start` and removes the development source mount. Rebuild and restart the backend image after source changes. A fully live-updating production API is not recommended.
+- Files: `backend/src/main.ts`, `backend/src/users/users.controller.ts`, `backend/views/`, `backend/public/styles.css`, `backend/package.json`, `README.md`, and generated `docs/tree.txt`.
+- Keep the current in-memory user store; database work is out of scope.
+- Keep `ApiUsersController` as the JSON API under `/api/users`.
+- Use the existing `UsersService` for all user data access.
+- Use NestJS response rendering and redirects; avoid duplicating controller logic or introducing a second service.
+- Do not add frontend Angular work in this task; the web controller is the server-rendered browser entry point tracked by B-05/B-06.
+
+**User Story**
+
+As a browser user, I want `/users` pages rendered by the backend so that I can view user information through a web interface while API clients continue using `/api/users`.

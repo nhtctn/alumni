@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{title}} | Alumni Istanbul</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <main class="shell narrow">
+      <a class="back-link" href="/users">← All users</a>
+      <section class="card form-card">
+        <p class="eyebrow">Alumni Istanbul</p>
+        <h1>{{heading}}</h1>
+        <p class="lede">Keep community member information accurate and up to date.</p>
+        <form method="post" action="{{action}}">
+          <label for="name">Full name</label>
+          <input id="name" name="name" type="text" value="{{user.name}}" required>
+          <label for="email">Email address</label>
+          <input id="email" name="email" type="email" value="{{user.email}}" required>
+          <div class="form-actions">
+            <a class="button button-secondary" href="/users">Cancel</a>
+            <button class="button button-primary" type="submit">{{submitLabel}}</button>
+          </div>
+        </form>
+      </section>
+    </main>
+  </body>
+</html>
