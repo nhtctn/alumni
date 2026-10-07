@@ -2,9 +2,12 @@ services:
   backend:
     build:
       context: ./backend
+    command: npm run start:dev
     restart: unless-stopped
     ports:
       - "3000:3000"
+    volumes:
+      - ./backend/src:/app/src
     depends_on:
       database:
         condition: service_healthy

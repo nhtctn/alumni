@@ -117,14 +117,45 @@ Open `.env` and adjust the values if needed (database user, password, database n
 docker compose up -d
 ```
 
-The initial API routes are available at `http://localhost:3000`:
+The API routes are available at `http://localhost:3000`:
 
 ```text
-GET /              API welcome message
-GET /hello         Generic greeting
-GET /hello/:name   Named greeting
-GET /sum/:a/:b     Sum of two integers
-GET /about         Project information
+GET /                 API welcome message
+GET /hello            Generic greeting
+GET /hello/:name      Named greeting
+GET /sum/:a/:b        Sum of two integers
+GET /about            Project information
+GET /api/health       Health check
+POST /api/users       Create an in-memory user
+GET /api/users        List users ordered by ID
+GET /api/users/:id    Get one user
+PUT /api/users/:id    Replace a user
+PATCH /api/users/:id  Partially update a user
+DELETE /api/users/:id Delete a user
+```
+
+User payloads require a non-empty `name` and valid `email`. Invalid input returns
+`400`, unknown IDs return `404`, and duplicate e-mail addresses return `409`.
+
+Swagger UI is available at `http://localhost:3000/api/swagger`, with the generated
+OpenAPI document at `http://localhost:3000/api/swagger-json`. The document is
+generated from NestJS decorators at startup.
+
+For development with automatic source watching and Swagger refresh, use the
+default Compose configuration:
+
+```bash
+docker compose up --build
+```
+
+The default `docker-compose.yml` mounts `backend/src` and runs
+`npm run start:dev` with webpack polling enabled for reliable Windows/Docker
+file change detection. Production applies the separate
+`docker-compose.prod.yml` override, which changes only the backend command and
+removes the development source mount:
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.prod.yml up --build -d
 ```
 
 ---

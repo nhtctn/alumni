@@ -1,7 +1,13 @@
 backend/
   src/
+    users/
+      user.dto.ts
+      user.entity.ts
+      users.controller.ts
+      users.service.ts
     app.controller.ts
     app.module.ts
+    health.controller.ts
     main.ts
   Dockerfile
   nest-cli.json
@@ -20,6 +26,7 @@ scripts/
 .env.example
 .gitignore
 AGENTS.md
+docker-compose.prod.yml
 docker-compose.yml
 package.json
 README.md

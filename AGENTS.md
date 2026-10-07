@@ -10,6 +10,7 @@ Lead developer for Alumni Istanbul. Work from the files in `/docs` and keep them
 - Planned cross-cutting features: dark/light theme, responsive design, PWA, multi-language.
 - Layout: `backend/` (NestJS API), `frontend/` (Angular, may not exist yet), `docs/`, `scripts/`, `docker-compose.yml`, `.env.example`. Full map: `docs/tree.txt`.
 - Conventions: follow the official NestJS and Angular style guides and the patterns already in the code. TypeScript everywhere.
+- Nest Module DTO organization: Keep related DTO classes for a NestJS module in one `<module>.dto.ts` file.
 
 # Commands
 
@@ -36,6 +37,7 @@ Create missing files. Keep every file short.
 - `tree.txt`: generated repo structure. Never edit by hand.
 - `README.md` (repo root, not in `/docs`): public overview (features, stack, setup, structure, roadmap status). Keep it accurate; read it only when updating it.
 - No separate architecture doc. Schema = entities/migrations, routes = controllers, rationale = `decisions.md`.
+- Record production-specific reminders in the backlog when development and production workflows or configuration must differ.
 - When a file passes ~150 lines, move older entries to `docs/archive/<name>-YYYY.md`.
 
 # Reading rules
@@ -67,6 +69,7 @@ Two phases, each started ONLY by an explicit owner request. For any other reques
 
 1. Remove the previous task from `plan.md` (if it has unticked subtasks, ask first).
 2. Pull exactly ONE item from `backlog.md` (the one the owner names, otherwise the best fit), remove it there, and write it to `plan.md`:
+   - > backlog item
    - **Title:** action-oriented
    - **Acceptance Criteria:** checklist
    - **Subtasks:** step-by-step list
@@ -79,7 +82,7 @@ Two phases, each started ONLY by an explicit owner request. For any other reques
 1. Confirm `plan.md` has an active task. If not, tell the owner to plan first.
 2. Implement subtasks one by one and tick them off in `plan.md`.
 3. Done = acceptance criteria met, and tests and lint pass (once defined).
-4. Finish: update `Current week` if it changed, add a `decisions.md` entry if an approved decision was made, update `README.md` if features, stack, setup, or structure changed, run `node scripts/tree.mjs` if files were added, moved, or deleted.
+4. Finish: check backlog item, add a `decisions.md` entry if an approved decision was made, update `README.md` if features, stack, setup, or structure changed, run `node scripts/tree.mjs` if files were added, moved, or deleted.
 
 # Behavior
 
