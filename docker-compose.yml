@@ -6,6 +6,12 @@ services:
     restart: unless-stopped
     ports:
       - "3000:3000"
+    environment:
+      DATABASE_HOST: database
+      DATABASE_PORT: 5432
+      DATABASE_NAME: ${POSTGRES_DB}
+      DATABASE_USER: ${POSTGRES_USER}
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - ./backend/src:/app/src
       - ./backend/views:/app/views

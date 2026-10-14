@@ -90,6 +90,8 @@ Alumni Istanbul is a centralized hub where the university can track alumni profi
 
 The full reasoning behind each choice is in [`docs/decisions.md`](./docs/decisions.md).
 
+For the current data model and schema direction, see [`docs/ddd.md`](./docs/ddd.md).
+
 ---
 
 ## MVC Structure

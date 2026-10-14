@@ -29,6 +29,7 @@ Create missing files. Keep every file short.
 
 - `prd.md`: scope constraints and MVP requirements. Short, rarely changes.
 - `decisions.md`: one line per significant decision: `YYYY-MM-DD | Decision | Why (one line) | Rejected: A, B`.
+- `ddd.md`: basic data model, tables, relationships, and schema direction for the alumni platform. During the planning phase, update `ddd.md` whenever the data design changes so the documented schema stays aligned with the active plan.
 - `backlog.md`: one line per item: `- [ ] bXX: description`. Include only constraints that affect the design (roles, filters, limits). Full specs are written in `plan.md` during planning. Items are checked `[x]` when done.
 - `plan.md`: the active task only. First line: `Current week: NN`.
 - `roadmap.md`: the 14-week course schedule.
