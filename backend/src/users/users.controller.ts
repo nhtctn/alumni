@@ -18,8 +18,8 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get()
-  findAll(@Res() response: Response): void {
-    response.render('users/index', { users: this.usersService.findAll() });
+  async findAll(@Res() response: Response): Promise<void> {
+    response.render('users/index', { users: await this.usersService.findAll() });
   }
 
   @Get('new')
@@ -33,12 +33,12 @@ export class UsersController {
   }
 
   @Post()
-  create(
+  async create(
     @Body() dto: CreateUserDto,
     @Res() response: Response,
-  ): void {
+  ): Promise<void> {
     try {
-      const user = this.usersService.create(dto);
+      const user = await this.usersService.create(dto);
       response.redirect(`/users/${user.id}`);
     } catch (error) {
       this.renderError(response, error);
@@ -46,12 +46,12 @@ export class UsersController {
   }
 
   @Get(':id')
-  findOne(
+  async findOne(
     @Param('id', ParseIntPipe) id: number,
     @Res() response: Response,
-  ): void {
+  ): Promise<void> {
     try {
-      response.render('users/detail', { user: this.usersService.findOne(id) });
+      response.render('users/detail', { user: await this.usersService.findOne(id) });
     } catch (error) {
       if (error instanceof NotFoundException) {
         response.status(404).render('users/not-found', {
@@ -64,17 +64,17 @@ export class UsersController {
   }
 
   @Get(':id/edit')
-  editForm(
+  async editForm(
     @Param('id', ParseIntPipe) id: number,
     @Res() response: Response,
-  ): void {
+  ): Promise<void> {
     try {
       response.render('users/form', {
         title: 'Edit user',
         heading: 'Edit user',
         action: `/users/${id}/edit`,
         submitLabel: 'Save changes',
-        user: this.usersService.findOne(id),
+        user: await this.usersService.findOne(id),
       });
     } catch (error) {
       this.renderError(response, error);
@@ -82,13 +82,13 @@ export class UsersController {
   }
 
   @Post(':id/edit')
-  update(
+  async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() dto: UpdateUserDto,
     @Res() response: Response,
-  ): void {
+  ): Promise<void> {
     try {
-      this.usersService.update(id, dto);
+      await this.usersService.update(id, dto);
       response.redirect(`/users/${id}`);
     } catch (error) {
       this.renderError(response, error);
@@ -96,12 +96,12 @@ export class UsersController {
   }
 
   @Post(':id/delete')
-  remove(
+  async remove(
     @Param('id', ParseIntPipe) id: number,
     @Res() response: Response,
-  ): void {
+  ): Promise<void> {
     try {
-      this.usersService.remove(id);
+      await this.usersService.remove(id);
       response.redirect('/users');
     } catch (error) {
       this.renderError(response, error);

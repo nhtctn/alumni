@@ -23,9 +23,9 @@ export class AnnouncementsController {
   ) {}
 
   @Get()
-  findAll(@Res() response: Response): void {
+  async findAll(@Res() response: Response): Promise<void> {
     response.render('announcements/index', {
-      announcements: this.announcementsService.findAll(),
+      announcements: await this.announcementsService.findAll(),
     });
   }
 
@@ -40,12 +40,12 @@ export class AnnouncementsController {
   }
 
   @Post()
-  create(
+  async create(
     @Body() dto: CreateAnnouncementDto,
     @Res() response: Response,
-  ): void {
+  ): Promise<void> {
     try {
-      const announcement = this.announcementsService.create(dto);
+      const announcement = await this.announcementsService.create(dto);
       response.redirect(`/announcements/${announcement.id}`);
     } catch (error) {
       this.renderError(response, error);
@@ -53,13 +53,13 @@ export class AnnouncementsController {
   }
 
   @Get(':id')
-  findOne(
+  async findOne(
     @Param('id', ParseIntPipe) id: number,
     @Res() response: Response,
-  ): void {
+  ): Promise<void> {
     try {
       response.render('announcements/detail', {
-        announcement: this.announcementsService.findOne(id),
+        announcement: await this.announcementsService.findOne(id),
       });
     } catch (error) {
       if (error instanceof NotFoundException) {
@@ -73,17 +73,17 @@ export class AnnouncementsController {
   }
 
   @Get(':id/edit')
-  editForm(
+  async editForm(
     @Param('id', ParseIntPipe) id: number,
     @Res() response: Response,
-  ): void {
+  ): Promise<void> {
     try {
       response.render('announcements/form', {
         title: 'Edit announcement',
         heading: 'Edit announcement',
         action: `/announcements/${id}/edit`,
         submitLabel: 'Save changes',
-        announcement: this.announcementsService.findOne(id),
+        announcement: await this.announcementsService.findOne(id),
       });
     } catch (error) {
       this.renderError(response, error);
@@ -91,13 +91,13 @@ export class AnnouncementsController {
   }
 
   @Post(':id/edit')
-  update(
+  async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() dto: UpdateAnnouncementDto,
     @Res() response: Response,
-  ): void {
+  ): Promise<void> {
     try {
-      this.announcementsService.update(id, dto);
+      await this.announcementsService.update(id, dto);
       response.redirect(`/announcements/${id}`);
     } catch (error) {
       this.renderError(response, error);
@@ -105,12 +105,12 @@ export class AnnouncementsController {
   }
 
   @Post(':id/delete')
-  remove(
+  async remove(
     @Param('id', ParseIntPipe) id: number,
     @Res() response: Response,
-  ): void {
+  ): Promise<void> {
     try {
-      this.announcementsService.remove(id);
+      await this.announcementsService.remove(id);
       response.redirect('/announcements');
     } catch (error) {
       this.renderError(response, error);

@@ -39,14 +39,14 @@ export class AnnouncementsApiController {
   @ApiBody({ type: CreateAnnouncementDto })
   @ApiResponse({ status: 201, type: Announcement })
   @ApiResponse({ status: 400, description: 'Invalid announcement data.' })
-  create(@Body() dto: CreateAnnouncementDto): Announcement {
+  async create(@Body() dto: CreateAnnouncementDto): Promise<Announcement> {
     return this.announcementsService.create(dto);
   }
 
   @Get()
   @ApiOperation({ summary: 'List announcements ordered by ID' })
   @ApiResponse({ status: 200, type: [Announcement] })
-  findAll(): Announcement[] {
+  async findAll(): Promise<Announcement[]> {
     return this.announcementsService.findAll();
   }
 
@@ -55,7 +55,7 @@ export class AnnouncementsApiController {
   @ApiParam({ name: 'id', type: Number, example: 1 })
   @ApiResponse({ status: 200, type: Announcement })
   @ApiResponse({ status: 404, description: 'Announcement not found.' })
-  findOne(@Param('id', ParseIntPipe) id: number): Announcement {
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<Announcement> {
     return this.announcementsService.findOne(id);
   }
 
@@ -66,10 +66,10 @@ export class AnnouncementsApiController {
   @ApiResponse({ status: 200, type: Announcement })
   @ApiResponse({ status: 400, description: 'Invalid announcement data.' })
   @ApiResponse({ status: 404, description: 'Announcement not found.' })
-  replace(
+  async replace(
     @Param('id', ParseIntPipe) id: number,
     @Body() dto: ReplaceAnnouncementDto,
-  ): Announcement {
+  ): Promise<Announcement> {
     return this.announcementsService.replace(id, dto);
   }
 
@@ -80,10 +80,10 @@ export class AnnouncementsApiController {
   @ApiResponse({ status: 200, type: Announcement })
   @ApiResponse({ status: 400, description: 'Invalid announcement data.' })
   @ApiResponse({ status: 404, description: 'Announcement not found.' })
-  update(
+  async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() dto: UpdateAnnouncementDto,
-  ): Announcement {
+  ): Promise<Announcement> {
     return this.announcementsService.update(id, dto);
   }
 
@@ -93,7 +93,7 @@ export class AnnouncementsApiController {
   @ApiParam({ name: 'id', type: Number, example: 1 })
   @ApiResponse({ status: 204, description: 'Announcement deleted.' })
   @ApiResponse({ status: 404, description: 'Announcement not found.' })
-  remove(@Param('id', ParseIntPipe) id: number): void {
-    this.announcementsService.remove(id);
+  async remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
+    await this.announcementsService.remove(id);
   }
 }

@@ -104,8 +104,8 @@ used as the template engine:
   `UsersController` and `AnnouncementsController` handle browser requests.
 
 - **View:** Handlebars templates in `backend/views/` render HTML pages.
-- **Service:** `UsersService` contains shared in-memory storage and business
-  logic used by both controllers.
+- **Service:** `UsersService` and `AnnouncementsService` use PostgreSQL-backed
+  storage and share business logic between both controllers.
 
 This keeps API responses and server-rendered pages separate while reusing the
 same model and service layer.
@@ -118,7 +118,7 @@ Try the Handlebars pages directly:
 - [Open the create-user form](http://localhost:3000/users/new)
 
 `UsersController` renders `/users` pages with Handlebars and shares the
-in-memory `UsersService` with `UsersApiController`.
+database-backed `UsersService` with `UsersApiController`.
 
 Announcements use the same API and server-rendered structure under
 `/api/announcements` and `/announcements`.
@@ -171,7 +171,7 @@ GET /sum/:a/:b                      Sum of two integers
 GET /about                          Project information
 GET /api/health                     Health check
 GET /api/users                      List users ordered by ID through the API
-POST /api/users                     Create an in-memory user through the API
+POST /api/users                     Create a database-backed user through the API
 GET /api/users/:id                  Get one user through the API
 PUT /api/users/:id                  Replace a user through the API
 PATCH /api/users/:id                Partially update a user through the API
@@ -263,11 +263,11 @@ docker compose build --no-cache frontend && docker compose up -d frontend
 ### Cleanup
 
 ```bash
-# Stop everything and remove volumes (wipes the database)
-docker compose down --volumes
+# Stop everything and remove orphaned containers (preserves the database volume)
+docker compose down --remove-orphans
 
-# Stop everything and remove images, volumes, and orphaned containers
-docker compose down --rmi all --volumes --remove-orphans
+# Remove built images when troubleshooting image/build issues
+docker compose down --rmi local --remove-orphans
 ```
 
 ---
