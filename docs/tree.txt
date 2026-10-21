@@ -9,7 +9,10 @@ backend/
       announcements.controller.ts
       announcements.service.ts
     applications/
+      application.dto.ts
       application.entity.ts
+      applications-user-api.controller.ts
+      applications.service.ts
     database/
       seed.factory.ts
       seed.service.ts

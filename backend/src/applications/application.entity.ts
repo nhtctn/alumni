@@ -12,11 +12,20 @@ export class Application {
   @ApiPropertyOptional({ type: () => User })
   user?: User
 
+  @ApiPropertyOptional({ example: 'Ada Lovelace' })
+  userName?: string
+
   @ApiProperty({ example: 1 })
   jobPostingId!: number
 
   @ApiPropertyOptional({ type: () => JobPosting })
   jobPosting?: JobPosting
+
+  @ApiPropertyOptional({ example: 'Backend Developer' })
+  title?: string
+
+  @ApiPropertyOptional({ example: 'Istanbul University' })
+  company?: string
 
   @ApiProperty({ example: 'applied' })
   status!: string
