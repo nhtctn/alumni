@@ -1,8 +1,18 @@
 import { Client } from 'pg';
-import { SeedFactory, type AnnouncementSeed, type EventRegistrationSeed, type EventSeed, type UserProfileSeed, type UserSeed } from './seed.factory';
+import {
+  SeedFactory,
+  type AnnouncementSeed,
+  type ApplicationSeed,
+  type EventRegistrationSeed,
+  type EventSeed,
+  type JobPostingSeed,
+  type UserProfileSeed,
+  type UserSeed,
+} from './seed.factory';
 
 type InsertedUser = UserSeed & { id: number };
 type InsertedEvent = EventSeed & { id: number };
+type InsertedJobPosting = JobPostingSeed & { id: number };
 
 export class SeedService {
   private readonly factory = new SeedFactory();
@@ -24,7 +34,7 @@ export class SeedService {
     try {
       await this.truncate();
 
-      const userCount = 12;
+      const userCount = 20;
       const userSeeds: UserSeed[] = Array.from({ length: userCount }, (_, index) => this.factory.createUser(index));
 
       const users = await this.insertUsers(userSeeds);
@@ -44,18 +54,35 @@ export class SeedService {
         }
       }
 
+      const jobPostingSeeds: JobPostingSeed[] = [];
+      for (let userIndex = 0; userIndex < 10; userIndex += 1) {
+        const postingCount = userIndex % 2 === 0 ? 2 : 3;
+        for (let postingIndex = 0; postingIndex < postingCount; postingIndex += 1) {
+          jobPostingSeeds.push(
+            this.factory.createJobPosting(
+              users[userIndex].id,
+              jobPostingSeeds.length,
+            ),
+          );
+        }
+      }
+
+      const jobPostings = await this.insertJobPostings(jobPostingSeeds);
+      const applications = this.createApplications(users, jobPostings);
+
       await this.insertProfiles(profiles);
       await this.insertAnnouncements(announcements);
       await this.insertRegistrations(registrations);
+      await this.insertApplications(applications);
 
-      console.log(`Seeded ${users.length} users, ${profiles.length} profiles, ${announcements.length} announcements, ${events.length} events, and ${registrations.length} registrations.`);
+      console.log(`Seeded ${users.length} users, ${profiles.length} profiles, ${announcements.length} announcements, ${events.length} events, ${registrations.length} registrations, ${jobPostings.length} job postings, and ${applications.length} applications.`);
     } finally {
       await this.client.end();
     }
   }
 
   private async truncate(): Promise<void> {
-    await this.client.query('TRUNCATE TABLE event_registrations, events, announcements, user_profiles, users RESTART IDENTITY CASCADE');
+    await this.client.query('TRUNCATE TABLE applications, job_postings, event_registrations, events, announcements, user_profiles, users RESTART IDENTITY CASCADE');
   }
 
   private async insertUsers(users: UserSeed[]): Promise<InsertedUser[]> {
@@ -129,6 +156,63 @@ export class SeedService {
 
     for (const registration of registrations) {
       await this.client.query(query, [registration.event_id, registration.user_id, registration.status]);
+    }
+  }
+
+  private async insertJobPostings(jobPostings: JobPostingSeed[]): Promise<InsertedJobPosting[]> {
+    const query = `
+      INSERT INTO job_postings (user_id, title, company, city, description)
+      VALUES ($1, $2, $3, $4, $5)
+      RETURNING id, user_id, title, company, city, description
+    `;
+
+    const insertedJobPostings: InsertedJobPosting[] = [];
+    for (const jobPosting of jobPostings) {
+      const result = await this.client.query<InsertedJobPosting>(query, [
+        jobPosting.user_id,
+        jobPosting.title,
+        jobPosting.company,
+        jobPosting.city,
+        jobPosting.description,
+      ]);
+      insertedJobPostings.push(result.rows[0]);
+    }
+    return insertedJobPostings;
+  }
+
+  private createApplications(
+    users: InsertedUser[],
+    jobPostings: InsertedJobPosting[],
+  ): ApplicationSeed[] {
+    const pairs: Array<[number, number]> = [];
+    for (const user of users) {
+      for (const jobPosting of jobPostings) {
+        pairs.push([user.id, jobPosting.id]);
+      }
+    }
+
+    for (let index = pairs.length - 1; index > 0; index -= 1) {
+      const randomIndex = Math.floor(Math.random() * (index + 1));
+      [pairs[index], pairs[randomIndex]] = [pairs[randomIndex], pairs[index]];
+    }
+
+    return pairs
+      .slice(0, 30)
+      .map(([userId, jobPostingId]) => this.factory.createApplication(userId, jobPostingId));
+  }
+
+  private async insertApplications(applications: ApplicationSeed[]): Promise<void> {
+    const query = `
+      INSERT INTO applications (user_id, job_posting_id, status)
+      VALUES ($1, $2, $3)
+    `;
+
+    for (const application of applications) {
+      await this.client.query(query, [
+        application.user_id,
+        application.job_posting_id,
+        application.status,
+      ]);
     }
   }
 }

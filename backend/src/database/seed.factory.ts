@@ -40,6 +40,20 @@ export type EventRegistrationSeed = {
   status: 'registered' | 'attended' | 'cancelled';
 };
 
+export type JobPostingSeed = {
+  user_id: number;
+  title: string;
+  company: string;
+  city: string | null;
+  description: string | null;
+};
+
+export type ApplicationSeed = {
+  user_id: number;
+  job_posting_id: number;
+  status: string;
+};
+
 export class SeedFactory {
   private readonly userRoles = ['admin', 'academician', 'alumni', 'student', 'guest'] as const;
   private readonly userStatuses = ['active', 'invited', 'suspended'] as const;
@@ -59,6 +73,21 @@ export class SeedFactory {
     'I lead engineering teams and support community-driven university partnerships.',
     'I focus on data-driven strategy, innovation, and research-led projects.',
     'I help young graduates discover opportunities in technology and business.',
+  ];
+  private readonly jobTitles = [
+    'Backend Developer',
+    'Frontend Developer',
+    'Data Analyst',
+    'Product Specialist',
+    'Business Analyst',
+    'UX Designer',
+  ];
+  private readonly companies = [
+    'Istanbul Technology',
+    'Bosphorus Labs',
+    'Marmara Digital',
+    'Golden Horn Systems',
+    'Istanbul University Innovation Hub',
   ];
 
   createUser(index: number, role?: (typeof this.userRoles)[number]): UserSeed {
@@ -119,6 +148,24 @@ export class SeedFactory {
       event_id: eventId,
       user_id: userId,
       status: ['registered', 'attended', 'cancelled'][index % 3] as 'registered' | 'attended' | 'cancelled',
+    };
+  }
+
+  createJobPosting(userId: number, index: number): JobPostingSeed {
+    return {
+      user_id: userId,
+      title: `${this.jobTitles[index % this.jobTitles.length]} ${index + 1}`,
+      company: this.companies[index % this.companies.length],
+      city: this.cities[index % this.cities.length],
+      description: 'Generated job posting description for database seeding and integration testing.',
+    };
+  }
+
+  createApplication(userId: number, jobPostingId: number): ApplicationSeed {
+    return {
+      user_id: userId,
+      job_posting_id: jobPostingId,
+      status: 'applied',
     };
   }
 }
