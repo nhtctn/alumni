@@ -1,4 +1,8 @@
-﻿import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Client } from 'pg';
 import {
   CreateUserDto,
@@ -131,12 +135,26 @@ export class UsersService {
 
   async remove(id: number): Promise<void> {
     await this.ensureConnected();
-    const result = await this.client.query(
-      'DELETE FROM users WHERE id = $1 RETURNING id',
-      [id],
-    );
-    if (result.rowCount === 0) {
-      throw new NotFoundException(`User with id ${id} not found`);
+    try {
+      const result = await this.client.query(
+        'DELETE FROM users WHERE id = $1 RETURNING id',
+        [id],
+      );
+      if (result.rowCount === 0) {
+        throw new NotFoundException(`User with id ${id} not found`);
+      }
+    } catch (error) {
+      if (
+        typeof error === 'object' &&
+        error !== null &&
+        'code' in error &&
+        error.code === '23503'
+      ) {
+        throw new ConflictException(
+          'User cannot be deleted because it is still referenced by another resource',
+        );
+      }
+      throw error;
     }
   }
 

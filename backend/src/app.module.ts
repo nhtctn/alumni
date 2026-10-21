@@ -7,6 +7,9 @@ import { AnnouncementsService } from './announcements/announcements.service';
 import { UsersApiController } from './users/users-api.controller';
 import { UsersController } from './users/users.controller';
 import { UsersService } from './users/users.service';
+import { JobPostingsApiController } from './job-postings/job-postings-api.controller';
+import { JobPostingsUserApiController } from './job-postings/job-postings-user-api.controller';
+import { JobPostingsService } from './job-postings/job-postings.service';
 
 @Module({
   controllers: [
@@ -16,7 +19,9 @@ import { UsersService } from './users/users.service';
     AnnouncementsController,
     UsersApiController,
     UsersController,
+    JobPostingsApiController, // Direct job-posting routes: /api/jobs
+    JobPostingsUserApiController, // Nested user routes: /api/users/:userId/jobs
   ],
-  providers: [AnnouncementsService, UsersService],
+  providers: [AnnouncementsService, UsersService, JobPostingsService],
 })
 export class AppModule {}

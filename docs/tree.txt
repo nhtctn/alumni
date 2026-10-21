@@ -8,6 +8,18 @@ backend/
       announcements-api.controller.ts
       announcements.controller.ts
       announcements.service.ts
+    applications/
+      application.entity.ts
+    database/
+      seed.factory.ts
+      seed.service.ts
+      seed.ts
+    job-postings/
+      job-posting.dto.ts
+      job-posting.entity.ts
+      job-postings-api.controller.ts
+      job-postings-user-api.controller.ts
+      job-postings.service.ts
     users/
       user.dto.ts
       user.entity.ts
@@ -36,8 +48,14 @@ backend/
   package.json
   tsconfig.json
   webpack.config.js
+database/
+  init/
+    001_schema.sql
+  migrations/
+    002_create_job_postings.sql
 docs/
   backlog.md
+  ddd.md
   decisions.md
   plan.md
   prd.md
