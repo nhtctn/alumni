@@ -9,11 +9,13 @@ import {
   ParseIntPipe,
   Res,
 } from '@nestjs/common';
+import { ApiExcludeController } from '@nestjs/swagger';
 import type { Response } from 'express';
 import { CreateUserDto, UpdateUserDto } from './user.dto';
 import { UsersService } from './users.service';
 
 @Controller('users')
+@ApiExcludeController()
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 

@@ -26,7 +26,6 @@ Alumni Istanbul is a centralized hub where the university can track alumni profi
     - [Requirements](#requirements)
     - [Setup](#setup)
   - [API Structure](#api-structure)
-    - [Routes](#routes)
     - [API Documentation: Swagger](#api-documentation-swagger)
   - [Docker Compose Cheat Sheet](#docker-compose-cheat-sheet)
     - [Daily use](#daily-use)
@@ -155,51 +154,15 @@ Open `.env` and adjust the values if needed (database user, password, database n
 docker compose up -d
 ```
 
+For now, Docker Compose temporarily handles database setup automatically:
+PostgreSQL applies the schema and migration scripts when the database volume is
+initialized, and the backend runs the seed command before starting. The seed
+data is refreshed whenever the backend container starts. A proper migration and
+seed workflow will be added later.
+
 ---
 
 ## API Structure
-
-### Routes
-
-The routes are available at `http://localhost:3000`:
-
-```text
-GET /                               API welcome message
-GET /hello                          Generic greeting
-GET /hello/:name                    Named greeting
-GET /sum/:a/:b                      Sum of two integers
-GET /about                          Project information
-GET /api/health                     Health check
-GET /api/users                      List users ordered by ID through the API
-POST /api/users                     Create a database-backed user through the API
-GET /api/users/:id                  Get one user through the API
-PUT /api/users/:id                  Replace a user through the API
-PATCH /api/users/:id                Partially update a user through the API
-DELETE /api/users/:id               Delete a user through the API
-GET /api/announcements              List announcements ordered by ID
-POST /api/announcements             Create an announcement
-GET /api/announcements/:id          Get one announcement
-PUT /api/announcements/:id          Replace an announcement
-PATCH /api/announcements/:id        Partially update an announcement
-DELETE /api/announcements/:id       Delete an announcement
-GET /users                          Render the user list as HTML
-GET /users/:id                      Render one user as HTML
-GET /users/new                      Render the create-user form
-POST /users                         Create a user from a browser form
-GET /users/:id/edit                 Render the edit-user form
-POST /users/:id/edit                Update a user from a browser form
-POST /users/:id/delete              Delete a user from a browser form
-GET /announcements                  Render the announcement list as HTML
-GET /announcements/:id              Render one announcement as HTML
-GET /announcements/new              Render the create-announcement form
-POST /announcements                 Create an announcement from a browser form
-GET /announcements/:id/edit         Render the edit-announcement form
-POST /announcements/:id/edit        Update an announcement from a browser form
-POST /announcements/:id/delete      Delete an announcement from a browser form
-```
-
-User payloads require a non-empty `name` and valid `email`. Invalid input returns
-`400`, unknown IDs return `404`, and duplicate e-mail addresses return `409`.
 
 ### API Documentation: Swagger
 
@@ -277,7 +240,13 @@ docker compose down --rmi local --remove-orphans
 ```text
 alumni/
 ├── backend/            # NestJS API and server-rendered web server
+│   ├── public/         # Static assets served by the backend
+│   ├── src/            # Application source code
+│   │   └── database/   # Seed factory, service, and entry point
 │   └── views/          # Handlebars templates for browser-facing routes
+├── database/
+│   ├── init/           # Initial PostgreSQL schema
+│   └── migrations/     # Incremental database migrations
 ├── frontend/           # Angular application (coming soon)
 ├── docs/
 │   ├── backlog.md      # Product backlog with planned work items

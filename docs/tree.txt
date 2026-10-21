@@ -11,6 +11,7 @@ backend/
     applications/
       application.dto.ts
       application.entity.ts
+      applications-api.controller.ts
       applications-user-api.controller.ts
       applications.service.ts
     database/

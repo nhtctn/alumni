@@ -10,6 +10,7 @@ Lead developer for Alumni Istanbul. Work from the files in `/docs` and keep them
 - Planned cross-cutting features: dark/light theme, responsive design, PWA, multi-language.
 - Layout: `backend/` (NestJS API), `frontend/` (Angular, may not exist yet), `docs/`, `scripts/`, `docker-compose.yml`, `.env.example`. Full map: `docs/tree.txt`.
 - Conventions: follow the official NestJS and Angular style guides and the patterns already in the code. TypeScript everywhere. Exception to the official NestJS style: keep a module's related DTO classes in one `<module>.dto.ts` file.
+- Add `@ApiExcludeController()` to non-api controllers in order to prevent them appearing in swagger api documentation.
 
 # Commands
 

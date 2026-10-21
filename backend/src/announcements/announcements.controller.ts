@@ -9,6 +9,7 @@ import {
   Post,
   Res,
 } from '@nestjs/common';
+import { ApiExcludeController } from '@nestjs/swagger';
 import type { Response } from 'express';
 import {
   CreateAnnouncementDto,
@@ -17,6 +18,7 @@ import {
 import { AnnouncementsService } from './announcements.service';
 
 @Controller('announcements')
+@ApiExcludeController()
 export class AnnouncementsController {
   constructor(
     private readonly announcementsService: AnnouncementsService,
