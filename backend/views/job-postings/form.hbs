@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{title}} | Alumni Istanbul</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <main class="shell narrow"><nav class="top-nav"><a class="brand" href="/">Alumni Istanbul</a></nav>
+      <a class="back-link" href="/jobs">← All job postings</a>
+      <section class="card form-card">
+        <p class="eyebrow">Alumni Istanbul</p>
+        <h1>{{heading}}</h1>
+        <p class="lede">Share a clear opportunity with the university community.</p>
+        <form method="post" action="{{action}}">
+          {{#unless jobPosting}}
+            <label for="userId">Posting user ID</label>
+            <input id="userId" name="userId" type="number" min="1" required>
+          {{/unless}}
+          <label for="title">Job title</label>
+          <input id="title" name="title" type="text" value="{{jobPosting.title}}" required>
+          <label for="company">Company</label>
+          <input id="company" name="company" type="text" value="{{jobPosting.company}}" required>
+          <label for="city">City</label>
+          <input id="city" name="city" type="text" value="{{jobPosting.city}}">
+          <label for="description">Description</label>
+          <textarea id="description" name="description" rows="7">{{jobPosting.description}}</textarea>
+          <div class="form-actions">
+            <a class="button button-secondary" href="/jobs">Cancel</a>
+            <button class="button button-primary" type="submit">{{submitLabel}}</button>
+          </div>
+        </form>
+      </section>
+    </main>
+  </body>
+</html>

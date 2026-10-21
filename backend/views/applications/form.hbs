@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="en">
+  <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Apply | Alumni Istanbul</title><link rel="stylesheet" href="/styles.css"></head>
+  <body>
+    <main class="shell narrow"><nav class="top-nav"><a class="brand" href="/">Alumni Istanbul</a></nav>
+      <a class="back-link" href="/jobs/{{jobPosting.id}}">← Job posting</a>
+      <section class="card form-card"><p class="eyebrow">Alumni Istanbul</p><h1>Apply for this job</h1><p class="lede">Enter the ID of the user submitting this application.</p>
+        <form method="post" action="{{action}}"><label for="userId">Applicant user ID</label><input id="userId" name="userId" type="number" min="1" required><div class="form-actions"><a class="button button-secondary" href="/jobs/{{jobPosting.id}}">Cancel</a><button class="button button-primary" type="submit">Submit application</button></div></form>
+      </section>
+    </main>
+  </body>
+</html>

@@ -9,13 +9,6 @@ import {
 @Controller()
 @ApiTags('General')
 export class AppController {
-  @Get()
-  @ApiOperation({ summary: 'Get the API welcome message' })
-  @ApiResponse({ status: 200, description: 'API welcome message.' })
-  getRoot(): string {
-    return 'Welcome to Alumni Istanbul API'
-  }
-
   @Get('hello')
   @ApiOperation({ summary: 'Get a generic greeting' })
   @ApiResponse({ status: 200, description: 'Generic greeting.' })

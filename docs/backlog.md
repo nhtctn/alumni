@@ -7,7 +7,4 @@
 - [x] B-05 | create /users endpoints intended to respond to the web application with page content
 - [x] B-06 | add a view layer using Handlebars (`hbs`) as the template engine
 - [x] B-07 | add a announcments module: routes, model, 2 controller (one for hbs), views
-
-# Future
-
-- Configure multi language support for api responses
+- [x] B-08 | Prepare basic UIs for job posting and application pages

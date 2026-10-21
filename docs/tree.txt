@@ -13,6 +13,7 @@ backend/
       application.entity.ts
       applications-api.controller.ts
       applications-user-api.controller.ts
+      applications.controller.ts
       applications.service.ts
     database/
       seed.factory.ts
@@ -23,6 +24,7 @@ backend/
       job-posting.entity.ts
       job-postings-api.controller.ts
       job-postings-user-api.controller.ts
+      job-postings.controller.ts
       job-postings.service.ts
     users/
       user.dto.ts
@@ -33,9 +35,24 @@ backend/
     app.controller.ts
     app.module.ts
     health.controller.ts
+    home.controller.ts
     main.ts
   views/
     announcements/
+      detail.hbs
+      error.hbs
+      form.hbs
+      index.hbs
+      not-found.hbs
+    applications/
+      detail.hbs
+      error.hbs
+      form.hbs
+      index.hbs
+      not-found.hbs
+    home/
+      index.hbs
+    job-postings/
       detail.hbs
       error.hbs
       form.hbs

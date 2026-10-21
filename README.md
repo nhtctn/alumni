@@ -21,7 +21,7 @@ Alumni Istanbul is a centralized hub where the university can track alumni profi
   - [Technical Features](#technical-features)
   - [Tech Stack](#tech-stack)
   - [MVC Structure](#mvc-structure)
-    - [Dummy server-rendered views](#dummy-server-rendered-views)
+    - [Server-rendered page examples](#server-rendered-page-examples)
   - [Getting Started](#getting-started)
     - [Requirements](#requirements)
     - [Setup](#setup)
@@ -95,32 +95,38 @@ For the current data model and schema direction, see [`docs/ddd.md`](./docs/ddd.
 
 ## MVC Structure
 
-The NestJS backend uses MVC with server-side rendering. HBS (Handlebars) is
-used as the template engine:
+The NestJS backend separates data, request handling, rendering, and persistence
+while supporting both JSON APIs and server-rendered pages. HBS (Handlebars) is
+the template engine for browser-facing views.
 
-- **Model:** entities and DTOs represent user and announcement data and validated input.
-- **Controller:** `UsersApiController` and `AnnouncementsApiController` serve JSON;
-  `UsersController` and `AnnouncementsController` handle browser requests.
+| Layer          | Responsibility                                        | Current implementation                                                                                                                               |
+| -------------- | ----------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Model**      | Define data shapes and validate input.                | Entities and DTOs for users, announcements, job postings, and applications.                                                                          |
+| **Controller** | Receive requests and return the appropriate response. | API controllers serve JSON; `UsersController`, `AnnouncementsController`, `JobPostingsController`, and `ApplicationsController` serve browser pages. |
+| **View**       | Render accessible HTML for browser users.             | Handlebars templates in `backend/views/`, with shared styling in `backend/public/styles.css`.                                                        |
+| **Service**    | Apply domain operations and access persistent data.   | PostgreSQL-backed services are reused by both API and server-rendered controllers.                                                                   |
 
-- **View:** Handlebars templates in `backend/views/` render HTML pages.
-- **Service:** `UsersService` and `AnnouncementsService` use PostgreSQL-backed
-  storage and share business logic between both controllers.
+This arrangement keeps API and page routes separate without duplicating
+business logic: both controller types call the same services, while each
+surface formats the response for its client.
 
-This keeps API responses and server-rendered pages separate while reusing the
-same model and service layer.
+### Server-rendered page examples
 
-### Dummy server-rendered views
+The current Handlebars pages include:
 
-Try the Handlebars pages directly:
+- **Users:** list, detail, create, and edit pages under `/users`.
+- **Announcements:** list, detail, create, and edit pages under `/announcements`.
+- **Job postings:** list, detail, create, and edit pages under `/jobs`.
+- **Applications:** submission forms under `/applications/job-postings/:jobPostingId/new`
+  and status lists under `/applications/users/:userId`.
 
+Try the main pages directly:
+
+- [Open the feature dashboard](http://localhost:3000/)
 - [Open the user list](http://localhost:3000/users)
-- [Open the create-user form](http://localhost:3000/users/new)
-
-`UsersController` renders `/users` pages with Handlebars and shares the
-database-backed `UsersService` with `UsersApiController`.
-
-Announcements use the same API and server-rendered structure under
-`/api/announcements` and `/announcements`.
+- [Open the announcements list](http://localhost:3000/announcements)
+- [Open the job-posting list](http://localhost:3000/jobs)
+- [Open the application status list](http://localhost:3000/applications/users/:userId)
 
 ---
 

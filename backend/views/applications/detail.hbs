@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en">
+  <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Application #{{application.id}} | Alumni Istanbul</title><link rel="stylesheet" href="/styles.css"></head>
+  <body>
+    <main class="shell narrow">
+      <nav class="top-nav"><a class="brand" href="/">Alumni Istanbul</a><a class="back-link" href="/applications/users/{{application.userId}}">← My applications</a></nav>
+      <section class="profile-card">
+        <div class="profile-top"><span class="avatar avatar-large">A</span><div><p class="eyebrow">Application</p><h1>Application #{{application.id}}</h1><p class="lede">Job posting #{{application.jobPostingId}}</p></div></div>
+        <dl class="details"><div><dt>Applicant</dt><dd>User #{{application.userId}}</dd></div><div><dt>Status</dt><dd><span class="status-badge">{{application.status}}</span></dd></div><div><dt>Application ID</dt><dd>#{{application.id}}</dd></div></dl>
+        <div class="actions"><a class="button button-secondary" href="/applications/users/{{application.userId}}">Back to applications</a><form method="post" action="/applications/{{application.id}}/delete"><input type="hidden" name="userId" value="{{application.userId}}"><button class="button button-danger" type="submit">Withdraw application</button></form></div>
+      </section>
+    </main>
+  </body>
+</html>

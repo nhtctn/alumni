@@ -1,4 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import { IsInt, IsNotEmpty, IsOptional, IsString, Min } from 'class-validator';
 
 export class CreateJobPostingDto {
@@ -27,6 +28,7 @@ export class CreateJobPostingDto {
 
 export class CreateDirectJobPostingDto extends CreateJobPostingDto {
   @ApiProperty({ example: 1 })
+  @Type(() => Number)
   @IsInt()
   @Min(1)
   userId!: number;

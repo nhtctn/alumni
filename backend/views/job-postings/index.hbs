@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Job postings | Alumni Istanbul</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <nav class="top-nav"><a class="brand" href="/">Alumni Istanbul</a></nav>
+      <header class="page-header">
+        <div>
+          <p class="eyebrow">Alumni Istanbul</p>
+          <h1>Job postings</h1>
+          <p class="lede">Discover opportunities shared by the university community.</p>
+        </div>
+        <a class="button button-primary" href="/jobs/new">Add job posting</a>
+      </header>
+      <section class="card">
+        <div class="section-heading">
+          <h2>Open opportunities</h2>
+          <span class="badge">{{jobPostings.length}} total</span>
+        </div>
+        {{#if jobPostings.length}}
+          <div class="user-list">
+            {{#each jobPostings}}
+              <a class="user-row" href="/jobs/{{id}}">
+                <span class="avatar">{{initial title}}</span>
+                <span class="user-copy">
+                  <strong>{{title}}</strong>
+                  <small>{{company}}{{#if city}} · {{city}}{{/if}}</small>
+                </span>
+                <span class="arrow">→</span>
+              </a>
+            {{/each}}
+          </div>
+        {{else}}
+          <div class="empty-state">
+            <span class="empty-icon">✦</span>
+            <h3>No job postings yet</h3>
+            <p>Create the first opportunity to get started.</p>
+            <a class="button button-secondary" href="/jobs/new">Create job posting</a>
+          </div>
+        {{/if}}
+      </section>
+    </main>
+  </body>
+</html>
