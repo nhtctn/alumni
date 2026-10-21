@@ -8,8 +8,8 @@ The project follows an **incremental, week-by-week** model where each week build
 | 02   | Routing: the doors of the system     | ✅     |
 | 03   | HTTP methods & CRUD                  | ✅     |
 | 04   | MVC Architecture                     | ✅     |
-| 05   | Database & ORM                       | 📅     |
-| 06   | Database integration                 | 📅     |
+| 05   | Database & ORM                       | ✅     |
+| 06   | Database integration                 | ✅     |
 | 07   | Relational data & advanced routing   | 📅     |
 | 08   | Midterm: code review                 | 📅     |
 | 09   | Middleware: the bouncer              | 📅     |
